@@ -1,0 +1,9 @@
+{
+  "extends": "react-app",
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": 1,
+    "react-hooks/rules-of-hooks": 0,
+    "react-hooks/exhaustive-deps": 0
+  }
+}
