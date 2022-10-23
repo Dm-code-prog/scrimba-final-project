@@ -2,14 +2,34 @@
 @import url(//fonts.googleapis.com/earlyaccess/karlatamilupright.css);
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 * {
   margin: 0;
-    padding: 0;
+  padding: 0;
+}
+
+h1,h2 {
+  font-family: 'Karla Tamil Upright', sans-serif;
+  font-weight: 700;
+  color: #293264;
+}
+
+span {
+  font-weight: 400;
+  font-size: 13px;
+  text-align: center;
+  color: #293264;
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+button:focus {
+  outline: none;
 }

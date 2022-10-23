@@ -2,146 +2,180 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 const AppContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  background: #f5f7fb;
-  display: grid;
-  place-items: center;
-  font-family: 'Inter', ui-monospace;
-
-  h2 {
-    font-family: 'Karla Tamil Upright', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 37px;
-    text-align: center;
-    color: #293264;
-  }
-
-  span {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background: #f5f7fb;
+    display: grid;
+    place-items: center;
     font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    text-align: center;
-
-    color: #293264;
-  }
-`;
-
-const BabyBlobContainer = styled.div`
-  position: fixed;
-  bottom: -3px;
-  left: 0;
-
-  > svg {
-    transition: all 0.3s ease;
-  }
-
-  ${ifProp(
-    'quizStarted',
-    css`
-      > svg {
-        width: 140px;
-        height: 140px;
-      }
-    `
-  )}
-`;
-
-const LemonBlobContainer = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-
-  > svg {
-    transition: all 0.5s ease;
-  }
-
-  ${ifProp(
-    'quizStarted',
-    css`
-      > svg {
-        width: 140px;
-        height: 140px;
-      }
-    `
-  )}
 `;
 
 const FlexColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+`;
+
+const BlobContainer = styled.div`
+    position: fixed;
+    > svg {
+        transition: all 0.3s ease;
+    }
+
+    ${ifProp(
+        'quizStarted',
+        css`
+            > svg {
+                width: 120px;
+                height: 120px;
+            }
+        `
+    )}
+`;
+
+BlobContainer.lemon = styled(BlobContainer)`
+    top: 0;
+    right: 0;
+`;
+
+BlobContainer.baby = styled(BlobContainer)`
+    bottom: -4px;
+    left: 0;
+`;
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 550px;
+    padding: 20px;
+`;
+
+Form.question = styled.section`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    padding: 20px;
+    border-bottom: 1px solid #dbdef0;
+`;
+
+Form.question.options = styled.div`
+    display: flex;
+    column-gap: 28px;
+    width: 100%;
+
+    > * {
+        flex-shrink: 1;
+    }
+`;
+
+Form.question.options.option = styled.button`
+    min-width: 64px;
+    padding: 4px 10px;
+    font-size: 10px;
+    color: #293264;
+    background: transparent;
+    border: 1px solid #4d5b9e;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+
+    ${ifProp('responseSaved', 'opacity: 0.5; pointer-events: none;')};
+
+    ${({ responseSaved, correct, selected }) => {
+        if (!responseSaved && selected) {
+            return css`
+                background: #d6dbf5;
+                border-color: transparent;
+            `;
+        }
+        if (responseSaved && correct) {
+            return css`
+                background: #94d7a2;
+                border-color: transparent;
+                opacity: 1;
+            `;
+        }
+
+        if (responseSaved && selected && !correct) {
+            return css`
+                background: #f8bcbc;
+            `;
+        }
+    }}
+`;
+
+const H1 = styled.h1`
+    font-size: 32px;
+`;
+
+const H2 = styled.h2`
+    font-size: 16px;
 `;
 
 const Button = styled.button`
-  border: none;
-  background: #4d5b9e;
-  border-radius: 15px;
-  font-style: normal;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+    border: none;
+    background: #4d5b9e;
+    font-style: normal;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+    color: #f5f7fb;
 
-  font-family: 'Inter', serif;
-  font-weight: 600;
+    &:hover {
+        scale: 1.05;
+    }
 
-  color: #f5f7fb;
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    scale: 1.05;
-  }
+    ${ifProp(
+        'disabled',
+        css`
+            opacity: 0.5;
+            pointer-events: none;
+        `
+    )}
 `;
 
-const BigButton = styled(Button)`
-  width: 195px;
-  height: 50px;
+Button.start = styled(Button)`
+    width: 195px;
+    height: 50px;
+    border-radius: 15px;
 `;
 
-const SaveButton = styled(Button)`
-  width: 120px;
-  height: 35px;
-  font-size: 10.24px;
-  line-height: 12px;
-  text-align: center;
-  border-radius: 10px;
-  font-weight: 600;
-
-  ${ifProp(
-    'disabled',
-    css`
-      opacity: 0.5;
-      pointer-events: none;
-    `
-  )}
+Button.save = styled(Button)`
+    width: 120px;
+    height: 35px;
+    font-size: 10px;
+    border-radius: 10px;
+    margin: 20px;
 `;
 
-const RestartButton = styled(Button)`
-  font-size: 10.24px;
-  line-height: 12px;
-  text-align: center;
-  border-radius: 10px;
-  font-weight: 600;
-  width: 100px;
-  height: 30px;
+Button.restart = styled(Button)`
+    font-size: 10px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+`;
+
+const QuizEndedTab = styled.div`
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
 `;
 
 export const S = {
-  AppContainer,
-  LemonBlobContainer,
-  BabyBlobContainer,
-  FlexColumnContainer,
-  BigButton,
-  SaveButton,
-  RestartButton,
+    AppContainer,
+    FlexColumnContainer,
+    Button,
+    H1,
+    H2,
+    BlobContainer,
+    Form,
+    QuizEndedTab,
 };
